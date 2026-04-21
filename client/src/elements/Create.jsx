@@ -121,7 +121,6 @@ function Create() {
                     value={values.age}
                     onChange={(e) => setValues({ ...values, age: e.target.value })}
                   />
-                  <div className="pc-helper">Solo se aceptan edades desde 18 años en adelante.</div>
                 </div>
 
                 <div className="pc-col-4">
