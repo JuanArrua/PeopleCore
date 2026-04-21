@@ -5,22 +5,7 @@ const cors = require("cors");
 const app = express();
 const port = Number(process.env.PORT) || 5000;
 
-const allowedOrigins = (process.env.ALLOWED_ORIGINS || "")
-  .split(",")
-  .map((origin) => origin.trim())
-  .filter(Boolean);
-
-app.use(
-  cors({
-    origin(origin, callback) {
-      if (!origin || allowedOrigins.length === 0 || allowedOrigins.includes(origin)) {
-        return callback(null, true);
-      }
-
-      return callback(new Error("Origin not allowed by CORS"));
-    },
-  })
-);
+app.use(cors());
 app.use(express.json());
 
 const requiredEnvVars = ["DB_HOST", "DB_USER", "DB_NAME"];
