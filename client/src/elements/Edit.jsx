@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../api";
 
 function Edit() {
   const [data, setData] = useState([]);
@@ -8,7 +8,7 @@ function Edit() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios
+    api
       .get(`/get_empleado/${id}`)
       .then((res) => {
         setData(res.data);
@@ -19,11 +19,10 @@ function Edit() {
   function handleSubmit(e) {
     e.preventDefault();
 
-    axios
+    api
       .post(`/edit_user/${id}`, data[0])
-      .then((res) => {
+      .then(() => {
         navigate("/");
-        console.log(res);
       })
       .catch((err) => console.log(err));
   }
@@ -31,30 +30,24 @@ function Edit() {
   return (
     <div className="bg-light min-vh-100 py-4">
       <div className="container">
-        
-        {/* Header */}
         <div className="d-flex justify-content-between align-items-center mb-4">
-          <h3 className="fw-bold text-primary mb-0">
-            Editar Empleado #{id}
-          </h3>
+          <h3 className="fw-bold text-primary mb-0">Editar Empleado #{id}</h3>
           <Link to="/" className="btn btn-outline-secondary">
             Volver
           </Link>
         </div>
 
-        {/* Card */}
         <div className="card shadow-sm border-0">
           <div className="card-body">
-            {data.map((student) => (
-              <form key={student.id} onSubmit={handleSubmit}>
-
+            {data.map((employee) => (
+              <form key={employee.id} onSubmit={handleSubmit}>
                 <div className="row">
                   <div className="col-md-6 mb-3">
                     <label className="form-label">Nombre y Apellido</label>
                     <input
                       className="form-control"
                       type="text"
-                      value={student.name}
+                      value={employee.name}
                       required
                       onChange={(e) =>
                         setData([{ ...data[0], name: e.target.value }])
@@ -67,7 +60,7 @@ function Edit() {
                     <input
                       className="form-control"
                       type="email"
-                      value={student.email}
+                      value={employee.email}
                       required
                       onChange={(e) =>
                         setData([{ ...data[0], email: e.target.value }])
@@ -78,11 +71,11 @@ function Edit() {
 
                 <div className="row">
                   <div className="col-md-4 mb-3">
-                    <label className="form-label">Género</label>
+                    <label className="form-label">Genero</label>
                     <input
                       className="form-control"
                       type="text"
-                      value={student.gender}
+                      value={employee.gender}
                       required
                       onChange={(e) =>
                         setData([{ ...data[0], gender: e.target.value }])
@@ -95,7 +88,7 @@ function Edit() {
                     <input
                       className="form-control"
                       type="number"
-                      value={student.age}
+                      value={employee.age}
                       required
                       onChange={(e) =>
                         setData([{ ...data[0], age: e.target.value }])
@@ -108,7 +101,7 @@ function Edit() {
                     <input
                       className="form-control"
                       type="number"
-                      value={student.salary}
+                      value={employee.salary}
                       required
                       onChange={(e) =>
                         setData([{ ...data[0], salary: e.target.value }])
@@ -122,12 +115,10 @@ function Edit() {
                     Guardar cambios
                   </button>
                 </div>
-
               </form>
             ))}
           </div>
         </div>
-
       </div>
     </div>
   );
