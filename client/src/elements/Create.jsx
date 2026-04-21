@@ -50,7 +50,6 @@ function Create() {
         <section className="pc-hero">
           <div className="pc-toolbar">
             <div>
-              <div className="pc-badge">Alta de talento</div>
               <h1 className="pc-title">Nuevo registro de empleado</h1>
               <p className="pc-subtitle">
                 Incorpora un nuevo colaborador al directorio con sus datos personales, laborales y salariales.
