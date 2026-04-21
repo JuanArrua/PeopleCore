@@ -39,49 +39,65 @@ function Create() {
   }
 
   return (
-    <div className="bg-light min-vh-100 py-4">
-      <div className="container">
-        <div className="d-flex justify-content-between align-items-center mb-4">
-          <h3 className="fw-bold text-primary mb-0">Agregar Empleado</h3>
-          <Link to="/" className="btn btn-outline-secondary">
-            Volver
-          </Link>
-        </div>
+    <div className="pc-page">
+      <div className="pc-container">
+        <section className="pc-hero">
+          <div className="pc-toolbar">
+            <div>
+              <div className="pc-badge">Talent intake form</div>
+              <h1 className="pc-title">Nuevo registro de empleado</h1>
+              <p className="pc-subtitle">
+                Carga datos de un nuevo integrante con validaciones de negocio y un formato listo para una demo profesional.
+              </p>
+            </div>
+            <div className="pc-actions">
+              <Link to="/" className="pc-btn-secondary">
+                Volver al dashboard
+              </Link>
+            </div>
+          </div>
+        </section>
 
-        {error && <div className="alert alert-danger">{error}</div>}
+        {error && <div className="alert alert-danger pc-alert">{error}</div>}
 
-        <div className="card shadow-sm border-0">
-          <div className="card-body">
+        <section className="pc-panel">
+          <div className="pc-panel-header">
+            <div>
+              <h2 className="pc-panel-title">Formulario de alta</h2>
+              <p className="pc-panel-copy">Completa la informacion base del empleado antes de incorporarlo al directorio.</p>
+            </div>
+            <span className="pc-pill">Validated input</span>
+          </div>
+
+          <div className="pc-form-shell">
             <form onSubmit={handleSubmit}>
-              <div className="row">
-                <div className="col-md-6 mb-3">
-                  <label className="form-label">Nombre y Apellido</label>
+              <div className="pc-form-grid">
+                <div className="pc-col-6">
+                  <label className="pc-label">Nombre y Apellido</label>
                   <input
                     type="text"
-                    className="form-control"
+                    className="pc-input"
                     required
                     value={values.name}
                     onChange={(e) => setValues({ ...values, name: e.target.value })}
                   />
                 </div>
 
-                <div className="col-md-6 mb-3">
-                  <label className="form-label">Email</label>
+                <div className="pc-col-6">
+                  <label className="pc-label">Email</label>
                   <input
                     type="email"
-                    className="form-control"
+                    className="pc-input"
                     required
                     value={values.email}
                     onChange={(e) => setValues({ ...values, email: e.target.value })}
                   />
                 </div>
-              </div>
 
-              <div className="row">
-                <div className="col-md-4 mb-3">
-                  <label className="form-label">Genero</label>
+                <div className="pc-col-4">
+                  <label className="pc-label">Genero</label>
                   <select
-                    className="form-select"
+                    className="pc-select"
                     value={values.gender}
                     onChange={(e) => setValues({ ...values, gender: e.target.value })}
                   >
@@ -90,42 +106,45 @@ function Create() {
                   </select>
                 </div>
 
-                <div className="col-md-4 mb-3">
-                  <label className="form-label">Edad</label>
+                <div className="pc-col-4">
+                  <label className="pc-label">Edad</label>
                   <input
                     type="number"
-                    className="form-control"
                     min="18"
+                    className="pc-input"
                     required
                     value={values.age}
                     onChange={(e) => setValues({ ...values, age: e.target.value })}
                   />
+                  <div className="pc-helper">Solo se aceptan edades desde 18 anos en adelante.</div>
                 </div>
 
-                <div className="col-md-4 mb-3">
-                  <label className="form-label">Salario</label>
+                <div className="pc-col-4">
+                  <label className="pc-label">Salario</label>
                   <input
                     type="text"
-                    className="form-control"
                     inputMode="numeric"
+                    className="pc-input"
                     placeholder="$ 800.000"
                     required
                     value={values.salary ? formatSalary(values.salary) : ""}
-                    onChange={(e) =>
-                      setValues({ ...values, salary: getSalaryDigits(e.target.value) })
-                    }
+                    onChange={(e) => setValues({ ...values, salary: getSalaryDigits(e.target.value) })}
                   />
+                  <div className="pc-helper">Se formatea automaticamente en moneda.</div>
                 </div>
               </div>
 
-              <div className="d-flex justify-content-end mt-4">
-                <button type="submit" className="btn btn-primary shadow-sm">
-                  Guardar
+              <div className="pc-form-actions">
+                <Link to="/" className="pc-btn-ghost">
+                  Cancelar
+                </Link>
+                <button type="submit" className="pc-btn-primary border-0">
+                  Guardar empleado
                 </button>
               </div>
             </form>
           </div>
-        </div>
+        </section>
       </div>
     </div>
   );

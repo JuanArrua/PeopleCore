@@ -61,52 +61,68 @@ function Edit() {
   }
 
   return (
-    <div className="bg-light min-vh-100 py-4">
-      <div className="container">
-        <div className="d-flex justify-content-between align-items-center mb-4">
-          <h3 className="fw-bold text-primary mb-0">Editar Empleado #{id}</h3>
-          <Link to="/" className="btn btn-outline-secondary">
-            Volver
-          </Link>
-        </div>
+    <div className="pc-page">
+      <div className="pc-container">
+        <section className="pc-hero">
+          <div className="pc-toolbar">
+            <div>
+              <div className="pc-badge">Update employee record</div>
+              <h1 className="pc-title">Editar perfil de empleado</h1>
+              <p className="pc-subtitle">
+                Actualiza los datos del colaborador manteniendo validaciones y formato consistente en toda la plataforma.
+              </p>
+            </div>
+            <div className="pc-actions">
+              <Link to="/" className="pc-btn-secondary">
+                Volver al dashboard
+              </Link>
+            </div>
+          </div>
+        </section>
 
-        {error && <div className="alert alert-danger">{error}</div>}
+        {error && <div className="alert alert-danger pc-alert">{error}</div>}
 
-        <div className="card shadow-sm border-0">
-          <div className="card-body">
+        <section className="pc-panel">
+          <div className="pc-panel-header">
+            <div>
+              <h2 className="pc-panel-title">Edicion del registro #{id}</h2>
+              <p className="pc-panel-copy">Ajusta la informacion del empleado sin salir del entorno de gestion.</p>
+            </div>
+            <span className="pc-pill">Editable profile</span>
+          </div>
+
+          <div className="pc-form-shell">
             {data.length === 0 ? (
               <p className="text-muted mb-0">No hay datos del empleado para editar.</p>
             ) : (
               data.map((employee) => (
                 <form key={employee.id} onSubmit={handleSubmit}>
-                  <div className="row">
-                    <div className="col-md-6 mb-3">
-                      <label className="form-label">Nombre y Apellido</label>
+                  <div className="pc-form-grid">
+                    <div className="pc-col-6">
+                      <label className="pc-label">Nombre y Apellido</label>
                       <input
-                        className="form-control"
+                        className="pc-input"
                         type="text"
                         value={employee.name}
                         required
                         onChange={(e) => setData([{ ...data[0], name: e.target.value }])}
                       />
                     </div>
-                    <div className="col-md-6 mb-3">
-                      <label className="form-label">Email</label>
+                    <div className="pc-col-6">
+                      <label className="pc-label">Email</label>
                       <input
-                        className="form-control"
+                        className="pc-input"
                         type="email"
                         value={employee.email}
                         required
                         onChange={(e) => setData([{ ...data[0], email: e.target.value }])}
                       />
                     </div>
-                  </div>
 
-                  <div className="row">
-                    <div className="col-md-4 mb-3">
-                      <label className="form-label">Genero</label>
+                    <div className="pc-col-4">
+                      <label className="pc-label">Genero</label>
                       <select
-                        className="form-select"
+                        className="pc-select"
                         value={employee.gender}
                         onChange={(e) => setData([{ ...data[0], gender: e.target.value }])}
                       >
@@ -114,10 +130,10 @@ function Edit() {
                         <option value="Femenino">Femenino</option>
                       </select>
                     </div>
-                    <div className="col-md-4 mb-3">
-                      <label className="form-label">Edad</label>
+                    <div className="pc-col-4">
+                      <label className="pc-label">Edad</label>
                       <input
-                        className="form-control"
+                        className="pc-input"
                         type="number"
                         min="18"
                         value={employee.age}
@@ -125,23 +141,24 @@ function Edit() {
                         onChange={(e) => setData([{ ...data[0], age: e.target.value }])}
                       />
                     </div>
-                    <div className="col-md-4 mb-3">
-                      <label className="form-label">Salario</label>
+                    <div className="pc-col-4">
+                      <label className="pc-label">Salario</label>
                       <input
-                        className="form-control"
+                        className="pc-input"
                         type="text"
                         inputMode="numeric"
                         required
                         value={employee.salary ? formatSalary(employee.salary) : ""}
-                        onChange={(e) =>
-                          setData([{ ...data[0], salary: getSalaryDigits(e.target.value) }])
-                        }
+                        onChange={(e) => setData([{ ...data[0], salary: getSalaryDigits(e.target.value) }])}
                       />
                     </div>
                   </div>
 
-                  <div className="d-flex justify-content-end mt-4">
-                    <button type="submit" className="btn btn-primary shadow-sm">
+                  <div className="pc-form-actions">
+                    <Link to="/" className="pc-btn-ghost">
+                      Cancelar
+                    </Link>
+                    <button type="submit" className="pc-btn-primary border-0">
                       Guardar cambios
                     </button>
                   </div>
@@ -149,7 +166,7 @@ function Edit() {
               ))
             )}
           </div>
-        </div>
+        </section>
       </div>
     </div>
   );

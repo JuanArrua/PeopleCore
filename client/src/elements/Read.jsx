@@ -28,19 +28,37 @@ function Read() {
   }, [id]);
 
   return (
-    <div className="bg-light min-vh-100 py-4">
-      <div className="container">
-        <div className="d-flex justify-content-between align-items-center mb-4">
-          <h3 className="fw-bold text-primary mb-0">Detalle del Empleado #{id}</h3>
-          <Link to="/" className="btn btn-outline-secondary">
-            Volver
-          </Link>
-        </div>
+    <div className="pc-page">
+      <div className="pc-container">
+        <section className="pc-hero">
+          <div className="pc-toolbar">
+            <div>
+              <div className="pc-badge">Employee profile</div>
+              <h1 className="pc-title">Ficha individual del empleado</h1>
+              <p className="pc-subtitle">
+                Consulta la informacion personal y salarial del colaborador dentro de una vista simple, ordenada y ejecutiva.
+              </p>
+            </div>
+            <div className="pc-actions">
+              <Link to="/" className="pc-btn-secondary">
+                Volver al dashboard
+              </Link>
+            </div>
+          </div>
+        </section>
 
-        {error && <div className="alert alert-danger">{error}</div>}
+        {error && <div className="alert alert-danger pc-alert">{error}</div>}
 
-        <div className="card shadow-sm border-0">
-          <div className="card-body">
+        <section className="pc-panel">
+          <div className="pc-panel-header">
+            <div>
+              <h2 className="pc-panel-title">Detalle del registro #{id}</h2>
+              <p className="pc-panel-copy">Informacion maestra del colaborador cargada actualmente en PeopleCore.</p>
+            </div>
+            <span className="pc-pill">Profile summary</span>
+          </div>
+
+          <div className="pc-detail-list">
             {data.length === 0 ? (
               <p className="text-muted mb-0">No hay datos del empleado para mostrar.</p>
             ) : (
@@ -48,33 +66,33 @@ function Read() {
                 <ul key={employee.id} className="list-group list-group-flush">
                   <li className="list-group-item d-flex justify-content-between">
                     <span className="fw-semibold">ID</span>
-                    <span>{employee.id}</span>
+                    <span className="pc-detail-value">{employee.id}</span>
                   </li>
                   <li className="list-group-item d-flex justify-content-between">
                     <span className="fw-semibold">Nombre y Apellido</span>
-                    <span>{employee.name}</span>
+                    <span className="pc-detail-value">{employee.name}</span>
                   </li>
                   <li className="list-group-item d-flex justify-content-between">
                     <span className="fw-semibold">Email</span>
-                    <span>{employee.email}</span>
+                    <span className="pc-detail-value">{employee.email}</span>
                   </li>
                   <li className="list-group-item d-flex justify-content-between">
                     <span className="fw-semibold">Edad</span>
-                    <span>{employee.age}</span>
+                    <span className="pc-detail-value">{employee.age}</span>
                   </li>
                   <li className="list-group-item d-flex justify-content-between">
                     <span className="fw-semibold">Genero</span>
-                    <span>{employee.gender}</span>
+                    <span className="pc-detail-value">{employee.gender}</span>
                   </li>
                   <li className="list-group-item d-flex justify-content-between">
                     <span className="fw-semibold">Salario</span>
-                    <span>{formatSalary(employee.salary)}</span>
+                    <span className="pc-detail-value">{formatSalary(employee.salary)}</span>
                   </li>
                 </ul>
               ))
             )}
           </div>
-        </div>
+        </section>
       </div>
     </div>
   );
