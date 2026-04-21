@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import api from "../api";
+import { formatSalary } from "../utils";
 
 function Read() {
   const [data, setData] = useState([]);
@@ -67,7 +68,7 @@ function Read() {
                   </li>
                   <li className="list-group-item d-flex justify-content-between">
                     <span className="fw-semibold">Salario</span>
-                    <span>${employee.salary}</span>
+                    <span>{formatSalary(employee.salary)}</span>
                   </li>
                 </ul>
               ))

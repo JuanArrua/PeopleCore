@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import api from "../api";
+import { formatSalary, getSalaryDigits } from "../utils";
 
 function Edit() {
   const [data, setData] = useState([]);
@@ -15,7 +16,12 @@ function Edit() {
       .get(`/get_empleado/${id}`)
       .then((res) => {
         if (Array.isArray(res.data)) {
-          setData(res.data);
+          setData(
+            res.data.map((employee) => ({
+              ...employee,
+              salary: String(Math.trunc(Number(employee.salary || 0))),
+            }))
+          );
         } else {
           setData([]);
           setError("La API devolvio un formato invalido para editar el empleado.");
@@ -35,8 +41,17 @@ function Edit() {
       return;
     }
 
+    if (Number(data[0].age) < 18) {
+      setError("La edad minima permitida es 18 anos.");
+      return;
+    }
+
     api
-      .post(`/edit_user/${id}`, data[0])
+      .post(`/edit_user/${id}`, {
+        ...data[0],
+        age: Number(data[0].age),
+        salary: Number(data[0].salary),
+      })
       .then(() => {
         navigate("/");
       })
@@ -90,19 +105,21 @@ function Edit() {
                   <div className="row">
                     <div className="col-md-4 mb-3">
                       <label className="form-label">Genero</label>
-                      <input
-                        className="form-control"
-                        type="text"
+                      <select
+                        className="form-select"
                         value={employee.gender}
-                        required
                         onChange={(e) => setData([{ ...data[0], gender: e.target.value }])}
-                      />
+                      >
+                        <option value="Masculino">Masculino</option>
+                        <option value="Femenino">Femenino</option>
+                      </select>
                     </div>
                     <div className="col-md-4 mb-3">
                       <label className="form-label">Edad</label>
                       <input
                         className="form-control"
                         type="number"
+                        min="18"
                         value={employee.age}
                         required
                         onChange={(e) => setData([{ ...data[0], age: e.target.value }])}
@@ -112,10 +129,13 @@ function Edit() {
                       <label className="form-label">Salario</label>
                       <input
                         className="form-control"
-                        type="number"
-                        value={employee.salary}
+                        type="text"
+                        inputMode="numeric"
                         required
-                        onChange={(e) => setData([{ ...data[0], salary: e.target.value }])}
+                        value={employee.salary ? formatSalary(employee.salary) : ""}
+                        onChange={(e) =>
+                          setData([{ ...data[0], salary: getSalaryDigits(e.target.value) }])
+                        }
                       />
                     </div>
                   </div>

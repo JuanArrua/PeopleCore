@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import api from "../api";
+import { formatSalary } from "../utils";
 
 function Home() {
   const [data, setData] = useState([]);
@@ -82,7 +83,7 @@ function Home() {
                         <td>{employee.email}</td>
                         <td>{employee.age}</td>
                         <td>{employee.gender}</td>
-                        <td>${employee.salary}</td>
+                        <td>{formatSalary(employee.salary)}</td>
                         <td className="text-center">
                           <Link
                             className="btn btn-outline-primary btn-sm me-2"

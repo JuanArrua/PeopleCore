@@ -1,27 +1,41 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../api";
+import { formatSalary, getSalaryDigits } from "../utils";
 
 function Create() {
   const [values, setValues] = useState({
     name: "",
     email: "",
     age: "",
-    gender: "",
+    gender: "Masculino",
     salary: "",
   });
+  const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
   function handleSubmit(e) {
     e.preventDefault();
+    setError("");
+
+    if (Number(values.age) < 18) {
+      setError("La edad minima permitida es 18 anos.");
+      return;
+    }
 
     api
-      .post("/add_user", values)
+      .post("/add_user", {
+        ...values,
+        age: Number(values.age),
+        salary: Number(values.salary),
+      })
       .then(() => {
         navigate("/");
       })
-      .catch((err) => console.log(err));
+      .catch(() => {
+        setError("No se pudo guardar el empleado.");
+      });
   }
 
   return (
@@ -34,6 +48,8 @@ function Create() {
           </Link>
         </div>
 
+        {error && <div className="alert alert-danger">{error}</div>}
+
         <div className="card shadow-sm border-0">
           <div className="card-body">
             <form onSubmit={handleSubmit}>
@@ -44,9 +60,8 @@ function Create() {
                     type="text"
                     className="form-control"
                     required
-                    onChange={(e) =>
-                      setValues({ ...values, name: e.target.value })
-                    }
+                    value={values.name}
+                    onChange={(e) => setValues({ ...values, name: e.target.value })}
                   />
                 </div>
 
@@ -56,9 +71,8 @@ function Create() {
                     type="email"
                     className="form-control"
                     required
-                    onChange={(e) =>
-                      setValues({ ...values, email: e.target.value })
-                    }
+                    value={values.email}
+                    onChange={(e) => setValues({ ...values, email: e.target.value })}
                   />
                 </div>
               </div>
@@ -66,14 +80,14 @@ function Create() {
               <div className="row">
                 <div className="col-md-4 mb-3">
                   <label className="form-label">Genero</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    required
-                    onChange={(e) =>
-                      setValues({ ...values, gender: e.target.value })
-                    }
-                  />
+                  <select
+                    className="form-select"
+                    value={values.gender}
+                    onChange={(e) => setValues({ ...values, gender: e.target.value })}
+                  >
+                    <option value="Masculino">Masculino</option>
+                    <option value="Femenino">Femenino</option>
+                  </select>
                 </div>
 
                 <div className="col-md-4 mb-3">
@@ -81,21 +95,24 @@ function Create() {
                   <input
                     type="number"
                     className="form-control"
+                    min="18"
                     required
-                    onChange={(e) =>
-                      setValues({ ...values, age: e.target.value })
-                    }
+                    value={values.age}
+                    onChange={(e) => setValues({ ...values, age: e.target.value })}
                   />
                 </div>
 
                 <div className="col-md-4 mb-3">
                   <label className="form-label">Salario</label>
                   <input
-                    type="number"
+                    type="text"
                     className="form-control"
+                    inputMode="numeric"
+                    placeholder="$ 800.000"
                     required
+                    value={values.salary ? formatSalary(values.salary) : ""}
                     onChange={(e) =>
-                      setValues({ ...values, salary: e.target.value })
+                      setValues({ ...values, salary: getSalaryDigits(e.target.value) })
                     }
                   />
                 </div>
