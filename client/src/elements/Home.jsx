@@ -5,16 +5,27 @@ import api from "../api";
 function Home() {
   const [data, setData] = useState([]);
   const [deleted, setDeleted] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     if (deleted) {
       setDeleted(false);
+      setError("");
+
       api
         .get("/empleados")
         .then((res) => {
-          setData(res.data);
+          if (Array.isArray(res.data)) {
+            setData(res.data);
+          } else {
+            setData([]);
+            setError("La API no devolvio una lista valida de empleados.");
+          }
         })
-        .catch((err) => console.log(err));
+        .catch(() => {
+          setData([]);
+          setError("No se pudo cargar la lista de empleados. Revisa la API y la base de datos.");
+        });
     }
   }, [deleted]);
 
@@ -24,7 +35,9 @@ function Home() {
       .then(() => {
         setDeleted(true);
       })
-      .catch((err) => console.log(err));
+      .catch(() => {
+        setError("No se pudo eliminar el empleado.");
+      });
   }
 
   return (
@@ -36,6 +49,8 @@ function Home() {
             + Agregar Empleado
           </Link>
         </div>
+
+        {error && <div className="alert alert-danger">{error}</div>}
 
         <div className="card shadow-sm border-0">
           <div className="card-body p-0">
@@ -53,36 +68,44 @@ function Home() {
                   </tr>
                 </thead>
                 <tbody>
-                  {data.map((employee) => (
-                    <tr key={employee.id}>
-                      <td>{employee.id}</td>
-                      <td className="fw-semibold">{employee.name}</td>
-                      <td>{employee.email}</td>
-                      <td>{employee.age}</td>
-                      <td>{employee.gender}</td>
-                      <td>${employee.salary}</td>
-                      <td className="text-center">
-                        <Link
-                          className="btn btn-outline-primary btn-sm me-2"
-                          to={`/read/${employee.id}`}
-                        >
-                          Ver
-                        </Link>
-                        <Link
-                          className="btn btn-outline-warning btn-sm me-2"
-                          to={`/edit/${employee.id}`}
-                        >
-                          Editar
-                        </Link>
-                        <button
-                          onClick={() => handleDelete(employee.id)}
-                          className="btn btn-outline-danger btn-sm"
-                        >
-                          Borrar
-                        </button>
+                  {data.length === 0 ? (
+                    <tr>
+                      <td colSpan="7" className="text-center py-4 text-muted">
+                        No hay empleados para mostrar.
                       </td>
                     </tr>
-                  ))}
+                  ) : (
+                    data.map((employee) => (
+                      <tr key={employee.id}>
+                        <td>{employee.id}</td>
+                        <td className="fw-semibold">{employee.name}</td>
+                        <td>{employee.email}</td>
+                        <td>{employee.age}</td>
+                        <td>{employee.gender}</td>
+                        <td>${employee.salary}</td>
+                        <td className="text-center">
+                          <Link
+                            className="btn btn-outline-primary btn-sm me-2"
+                            to={`/read/${employee.id}`}
+                          >
+                            Ver
+                          </Link>
+                          <Link
+                            className="btn btn-outline-warning btn-sm me-2"
+                            to={`/edit/${employee.id}`}
+                          >
+                            Editar
+                          </Link>
+                          <button
+                            onClick={() => handleDelete(employee.id)}
+                            className="btn btn-outline-danger btn-sm"
+                          >
+                            Borrar
+                          </button>
+                        </td>
+                      </tr>
+                    ))
+                  )}
                 </tbody>
               </table>
             </div>
