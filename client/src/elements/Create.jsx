@@ -20,13 +20,19 @@ function Create() {
     setError("");
 
     if (Number(values.age) < 18) {
-      setError("La edad minima permitida es 18 anos.");
+      setError("La edad mínima permitida es 18 años.");
+      return;
+    }
+
+    if (!values.email.toLowerCase().endsWith("@gmail.com")) {
+      setError("El email debe ser una dirección válida de Gmail.");
       return;
     }
 
     api
       .post("/add_user", {
         ...values,
+        email: values.email.toLowerCase(),
         age: Number(values.age),
         salary: Number(values.salary),
       })
@@ -64,9 +70,8 @@ function Create() {
           <div className="pc-panel-header">
             <div>
               <h2 className="pc-panel-title">Formulario de alta</h2>
-              <p className="pc-panel-copy">Completa la informacion base del empleado antes de incorporarlo al directorio.</p>
+              <p className="pc-panel-copy">Completa la información base del empleado antes de incorporarlo al directorio.</p>
             </div>
-            <span className="pc-pill">Validated input</span>
           </div>
 
           <div className="pc-form-shell">
@@ -116,7 +121,7 @@ function Create() {
                     value={values.age}
                     onChange={(e) => setValues({ ...values, age: e.target.value })}
                   />
-                  <div className="pc-helper">Solo se aceptan edades desde 18 anos en adelante.</div>
+                  <div className="pc-helper">Solo se aceptan edades desde 18 años en adelante.</div>
                 </div>
 
                 <div className="pc-col-4">
@@ -130,7 +135,6 @@ function Create() {
                     value={values.salary ? formatSalary(values.salary) : ""}
                     onChange={(e) => setValues({ ...values, salary: getSalaryDigits(e.target.value) })}
                   />
-                  <div className="pc-helper">Se formatea automaticamente en moneda.</div>
                 </div>
               </div>
 

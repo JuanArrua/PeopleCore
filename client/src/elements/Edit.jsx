@@ -24,7 +24,7 @@ function Edit() {
           );
         } else {
           setData([]);
-          setError("La API devolvio un formato invalido para editar el empleado.");
+          setError("La API devolvió un formato inválido para editar el empleado.");
         }
       })
       .catch(() => {
@@ -37,18 +37,24 @@ function Edit() {
     e.preventDefault();
 
     if (!data[0]) {
-      setError("No hay datos validos para guardar.");
+      setError("No hay datos válidos para guardar.");
       return;
     }
 
     if (Number(data[0].age) < 18) {
-      setError("La edad minima permitida es 18 anos.");
+      setError("La edad mínima permitida es 18 años.");
+      return;
+    }
+
+    if (!String(data[0].email).toLowerCase().endsWith("@gmail.com")) {
+      setError("El email debe ser una dirección válida de Gmail.");
       return;
     }
 
     api
       .post(`/edit_user/${id}`, {
         ...data[0],
+        email: String(data[0].email).toLowerCase(),
         age: Number(data[0].age),
         salary: Number(data[0].salary),
       })
@@ -85,10 +91,9 @@ function Edit() {
         <section className="pc-panel">
           <div className="pc-panel-header">
             <div>
-              <h2 className="pc-panel-title">Edicion del registro #{id}</h2>
-              <p className="pc-panel-copy">Ajusta la informacion del empleado sin salir del entorno de gestion.</p>
+              <h2 className="pc-panel-title">Edición del registro #{id}</h2>
+              <p className="pc-panel-copy">Ajusta la información del empleado sin salir del entorno de gestión.</p>
             </div>
-            <span className="pc-pill">Editable profile</span>
           </div>
 
           <div className="pc-form-shell">
@@ -140,6 +145,7 @@ function Edit() {
                         required
                         onChange={(e) => setData([{ ...data[0], age: e.target.value }])}
                       />
+                      <div className="pc-helper">Solo se aceptan edades desde 18 años en adelante.</div>
                     </div>
                     <div className="pc-col-4">
                       <label className="pc-label">Salario</label>
