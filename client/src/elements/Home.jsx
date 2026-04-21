@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+﻿import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import api from "../api";
 import { formatSalary } from "../utils";
@@ -20,7 +20,7 @@ function Home() {
             setData(res.data);
           } else {
             setData([]);
-            setError("La API no devolvio una lista valida de empleados.");
+            setError("La API no devolvió una lista válida de empleados.");
           }
         })
         .catch(() => {
@@ -57,7 +57,7 @@ function Home() {
               <div className="pc-badge">April 2026 Workforce Snapshot</div>
               <h1 className="pc-title">PeopleCore Employee Hub</h1>
               <p className="pc-subtitle">
-                Un dashboard de capital humano pensado para presentar equipos, compensacion y datos de empleados
+                Un dashboard de capital humano pensado para presentar equipos, compensación y datos de empleados
                 con una experiencia clara, moderna y lista para recruiters o stakeholders corporativos.
               </p>
             </div>
@@ -78,7 +78,7 @@ function Home() {
           <article className="pc-metric">
             <p className="pc-metric-label">Edad promedio</p>
             <p className="pc-metric-value">{averageAge || "-"}</p>
-            <p className="pc-metric-note">Edad media actual de la nomina.</p>
+            <p className="pc-metric-note">Edad media actual de la nómina.</p>
           </article>
           <article className="pc-metric">
             <p className="pc-metric-label">Payroll mensual</p>
@@ -112,7 +112,7 @@ function Home() {
                     <th>Nombre y Apellido</th>
                     <th>Email</th>
                     <th>Edad</th>
-                    <th>Genero</th>
+                    <th>Género</th>
                     <th>Salario</th>
                     <th className="text-center">Acciones</th>
                   </tr>

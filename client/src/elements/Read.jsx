@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import api from "../api";
 import { formatSalary } from "../utils";
@@ -18,7 +18,7 @@ function Read() {
           setData(res.data);
         } else {
           setData([]);
-          setError("La API devolvio un formato invalido para el empleado.");
+          setError("La API devolvió un formato inválido para el empleado.");
         }
       })
       .catch(() => {
@@ -36,7 +36,7 @@ function Read() {
               <div className="pc-badge">Employee profile</div>
               <h1 className="pc-title">Ficha individual del empleado</h1>
               <p className="pc-subtitle">
-                Consulta la informacion personal y salarial del colaborador dentro de una vista simple, ordenada y ejecutiva.
+                Consulta la información personal y salarial del colaborador dentro de una vista simple, ordenada y ejecutiva.
               </p>
             </div>
             <div className="pc-actions">
@@ -53,7 +53,7 @@ function Read() {
           <div className="pc-panel-header">
             <div>
               <h2 className="pc-panel-title">Detalle del registro #{id}</h2>
-              <p className="pc-panel-copy">Informacion maestra del colaborador cargada actualmente en PeopleCore.</p>
+              <p className="pc-panel-copy">Información maestra del colaborador cargada actualmente en PeopleCore.</p>
             </div>
             <span className="pc-pill">Profile summary</span>
           </div>
@@ -81,7 +81,7 @@ function Read() {
                     <span className="pc-detail-value">{employee.age}</span>
                   </li>
                   <li className="list-group-item d-flex justify-content-between">
-                    <span className="fw-semibold">Genero</span>
+                    <span className="fw-semibold">Género</span>
                     <span className="pc-detail-value">{employee.gender}</span>
                   </li>
                   <li className="list-group-item d-flex justify-content-between">

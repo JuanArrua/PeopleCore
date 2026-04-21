@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../api";
 import { formatSalary, getSalaryDigits } from "../utils";
@@ -20,12 +20,12 @@ function Create() {
     setError("");
 
     if (Number(values.age) < 18) {
-      setError("La edad m�nima permitida es 18 a�os.");
+      setError("La edad mínima permitida es 18 años.");
       return;
     }
 
     if (!values.email.toLowerCase().endsWith("@gmail.com")) {
-      setError("El email debe ser una direcci�n v�lida de Gmail.");
+      setError("El email debe ser una dirección válida de Gmail.");
       return;
     }
 
@@ -50,10 +50,10 @@ function Create() {
         <section className="pc-hero">
           <div className="pc-toolbar">
             <div>
-              <div className="pc-badge">Talent intake form</div>
+              <div className="pc-badge">Alta de talento</div>
               <h1 className="pc-title">Nuevo registro de empleado</h1>
               <p className="pc-subtitle">
-                Carga datos de un nuevo integrante con validaciones de negocio y un formato listo para una demo profesional.
+                Incorpora un nuevo colaborador al directorio con sus datos personales, laborales y salariales.
               </p>
             </div>
             <div className="pc-actions">
@@ -70,7 +70,7 @@ function Create() {
           <div className="pc-panel-header">
             <div>
               <h2 className="pc-panel-title">Formulario de alta</h2>
-              <p className="pc-panel-copy">Completa la informaci�n base del empleado antes de incorporarlo al directorio.</p>
+              <p className="pc-panel-copy">Completa la información base del empleado antes de incorporarlo al directorio.</p>
             </div>
           </div>
 
@@ -100,7 +100,7 @@ function Create() {
                 </div>
 
                 <div className="pc-col-4">
-                  <label className="pc-label">Genero</label>
+                  <label className="pc-label">Género</label>
                   <select
                     className="pc-select"
                     value={values.gender}
@@ -121,7 +121,7 @@ function Create() {
                     value={values.age}
                     onChange={(e) => setValues({ ...values, age: e.target.value })}
                   />
-                  <div className="pc-helper">Solo se aceptan edades desde 18 a�os en adelante.</div>
+                  <div className="pc-helper">Solo se aceptan edades desde 18 años en adelante.</div>
                 </div>
 
                 <div className="pc-col-4">

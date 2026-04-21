@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+Ôªøimport React, { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import api from "../api";
 import { formatSalary, getSalaryDigits } from "../utils";
@@ -24,7 +24,7 @@ function Edit() {
           );
         } else {
           setData([]);
-          setError("La API devolviÛ un formato inv·lido para editar el empleado.");
+          setError("La API devolvi√≥ un formato inv√°lido para editar el empleado.");
         }
       })
       .catch(() => {
@@ -37,17 +37,17 @@ function Edit() {
     e.preventDefault();
 
     if (!data[0]) {
-      setError("No hay datos v·lidos para guardar.");
+      setError("No hay datos v√°lidos para guardar.");
       return;
     }
 
     if (Number(data[0].age) < 18) {
-      setError("La edad mÌnima permitida es 18 aÒos.");
+      setError("La edad m√≠nima permitida es 18 a√±os.");
       return;
     }
 
     if (!String(data[0].email).toLowerCase().endsWith("@gmail.com")) {
-      setError("El email debe ser una direcciÛn v·lida de Gmail.");
+      setError("El email debe ser una direcci√≥n v√°lida de Gmail.");
       return;
     }
 
@@ -91,8 +91,8 @@ function Edit() {
         <section className="pc-panel">
           <div className="pc-panel-header">
             <div>
-              <h2 className="pc-panel-title">EdiciÛn del registro #{id}</h2>
-              <p className="pc-panel-copy">Ajusta la informaciÛn del empleado sin salir del entorno de gestiÛn.</p>
+              <h2 className="pc-panel-title">Edici√≥n del registro #{id}</h2>
+              <p className="pc-panel-copy">Ajusta la informaci√≥n del empleado sin salir del entorno de gesti√≥n.</p>
             </div>
           </div>
 
@@ -125,7 +125,7 @@ function Edit() {
                     </div>
 
                     <div className="pc-col-4">
-                      <label className="pc-label">Genero</label>
+                      <label className="pc-label">G√©nero</label>
                       <select
                         className="pc-select"
                         value={employee.gender}
@@ -145,7 +145,7 @@ function Edit() {
                         required
                         onChange={(e) => setData([{ ...data[0], age: e.target.value }])}
                       />
-                      <div className="pc-helper">Solo se aceptan edades desde 18 aÒos en adelante.</div>
+                      <div className="pc-helper">Solo se aceptan edades desde 18 a√±os en adelante.</div>
                     </div>
                     <div className="pc-col-4">
                       <label className="pc-label">Salario</label>
